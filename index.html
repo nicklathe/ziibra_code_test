@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ziibra Code Test</title>
+  <link href='//fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Lato', sans-serif;
+      background-image: url("https://s3.amazonaws.com/StartupStockPhotos/20140808_StartupStockPhotos/52.jpg");
+      background-repeat: none;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .wrapper {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      margin: 0 auto;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      background-color: rgba(0,0,0,0.7);
+    }
+
+    h1 {
+      font-size: 70px;
+      font-weight: 300;
+      color: #fff;
+    }
+
+    .main {
+      width: 100%;
+      background-color: rgba(222,222,222,0.9);
+      padding-top: 20px;
+      padding-bottom: 100px;
+    }
+
+    .input-field {
+      width: 50%;
+      margin: 0 auto;
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      height: 20px;
+      border: 2px solid;
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    button {
+      height: 40px;
+      width: 150px;
+      border: 2px solid;
+      border-color: #000;
+      border-radius: 20px;
+      margin-top: 20px;
+      background-color: rgba(87, 148, 88, 0.4);
+      color: #000;
+      font-size: 15px;
+      -webkit-transition:background-color 1s;
+      -moz-transition:background-color 1s;
+      -o-transition:background-color 1s;
+      transition:background-color 1s;
+    }
+
+    button:hover {
+      background-color: rgba(87, 148, 88, 0.8);
+    }
+
+    button:focus,
+    input:focus,
+    select:focus {
+      outline: none;
+    }
+
+    .list-field {
+      padding-top: 100px;
+      width: 35%;
+      margin: 0 auto;
+    }
+
+    select {
+      width: 100%;
+      margin: 0 auto;
+      border: 2px solid;
+      border-radius: 5px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .list-field {
+        padding-top: 75px;
+        width: 75%;
+      }
+
+      .input-field {
+        width: 75%;
+      }
+
+      h1 {
+        font-size: 50px;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Email Selector</h1>
+    </header>
+    <div class="main">
+      <div class="input-field">
+        <input id="email-in" type="text" placeholder="Enter emails here...">
+        <button id="save">Save Emails</button>
+      </div>
+      <div class="list-field">
+        <select name="email-list" id="list" size="5">
+          <!-- <option></option> -->
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    window.onload = function(){
+
+      var btn = document.getElementById('save');
+
+      btn.addEventListener('click', function(){
+        // get's value of input field
+        var emails = document.getElementById('email-in').value;
+
+        // deletes any qoutes or < > and splits email string into new array at delimiters (, ; :)
+        var emailArray = emails.replace(/['"<>]+/g, '').split(/[,;:]+/);
+
+        // section below populates list with new option tags
+        var list = document.getElementById('list');
+        for(var i = 0; i < emailArray.length; i++){
+          //splits contact into new array to display name and email correctly
+          var contact = emailArray[i].split(' ');
+          // create empty string for later use
+          var contactDisplay = '';
+          var newEmail = document.createElement('option');
+          list.appendChild(newEmail);
+          // simple email validation that checks for @ sign
+          if(emailArray[i].search(/[@]+/) !== (-1)){
+            if(contact.length <= 1){
+              newEmail.innerHTML = emailArray[i];
+            } else {
+              // splits contact into array, to add < > to email string
+              for(var j = 0; j < contact.length; j++){
+                if(j === (contact.length - 1)){
+                  contactDisplay += ' &lt;' + contact[j] + '&gt;';
+                } else {
+                  contactDisplay += ' ' + contact[j];
+                };
+              };
+              newEmail.innerHTML = contactDisplay;
+            };
+          } else {
+            newEmail.innerHTML = emailArray[i] + ' [error parsing email string]'
+          };
+        };
+      });
+    };
+
+  </script>
+
+</body>
+</html>
