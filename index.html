@@ -163,7 +163,7 @@
           // simple email validation that checks for @ sign
           if(emailArray[i].search(/[@]+/) !== (-1)){
             if(contact.length <= 1){
-              newEmail.innerHTML = emailArray[i];
+              newEmail.innerHTML = '&lt;' + emailArray[i] + '&gt;';
             } else {
               // splits contact into array, to add < > to email string
               for(var j = 0; j < contact.length; j++){
